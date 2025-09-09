@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar e remover imagens</title>
+</head>
+<body style="text-align: center;">
+    <h2>Adicione uma imagem</h2>
+    <input type="text" id="url">
+    <button onclick="adicionar()">Adicionar</button>
+    <button onclick="limpar()">Limpar</button>
+
+    <div id="galeria" style="margin-top: 20px;"></div>
+
+    <script>
+        let imagens = []
+
+        function adicionar (){
+            let input = document.getElementById("url")
+            imagens.push(input.value)
+            input.value = ""
+            atualizarGaleira()
+        }
+
+        function atualizarGaleira(){
+            let galeria = document.getElementById("galeria")
+            galeria.innerHTML = ""
+            imagens.forEach((url) => {
+                galeria.innerHTML +=
+                `<img src="${url}" width="150"
+                style="margin: 10px
+                border-radious: 10px">`
+            })
+        }
+
+        function limpar() {
+            imagens = []
+            atualizarGaleira()
+        }
+    </script>
+</body>
+</html>
