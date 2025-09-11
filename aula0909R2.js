@@ -11,7 +11,8 @@ console.log(nomes[0]) // Buscando a posição 0, pois só tem uma variável no m
 
 // Criando um VETOR já preenchido
 let albuns = ["DIL", "BDay", "Iasf", "4", "BEYONCE", "Lemonade", "RENAISSANCE", "COWBOY CARTER"]
-let meuAlbum = "BDay" // Exemplo de verificação
+let meuAlbum = "VGhjhb" // Exemplo de verificação
+
 let existe = false
 
 // Estrutura de repetição FOR para checar se o jogo já existe no meu VETOR
@@ -22,7 +23,7 @@ for (let i = 0; i < albuns.length; i++) {
     }
 }
 
-if (existe == true) {
+if (existe) {
     console.log("Jogo já existente na lista!")
 } else {
     albuns.push(meuAlbum)
