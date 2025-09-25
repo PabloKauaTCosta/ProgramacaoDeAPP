@@ -12,12 +12,15 @@
 </head>
 <body>
     <div id="tabelaProd">
+        <!--Tabela: Podutos-->
         <table border="1">
-            <tr>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
             <tbody id="corpoTab"></tbody>
         </table>
     </div>
@@ -25,13 +28,16 @@
     <br>
 
     <div >
+        <!--Botão: Cadastrar-->
         <button id="cadastrarProd" onclick="cadastrar()">Cadastrar</button>
     </div>
 
     <div id="gerenciadorProd">
-        <h1>Cadastro de produto</h2>
+        <!--Título-->
+        <h1>Cadastro de produto</h1>
 
-        <form action="">
+        <!--Formulário-->
+        <form action=""> 
             <div>
                 <label for ="nomeProdt">Nome: 
                     <input id="nomeProd" placeholder="Digite o nome" required>
@@ -50,21 +56,21 @@
 
             <div>
                 <label for="quantidadeProdt">Quantidade: 
-                    <input  id="quantidadeProd" placeholder="Digite a quantidade" required>
+                    <input id="quantidadeProd" placeholder="Digite a quantidade" required>
                 </label>
             </div>
 
             <br>
 
             <div>
-                <button onclick="salvar()">Salvar</button>
-                <button onclick="cancelar()">Cancelar</button>
+                <button type="button" onclick="salvar()">Salvar</button> 
+                <button type="button" onclick="cancelar()">Cancelar</button>
             </div>
         </form>
     </div>
     
     <script>
-    // Esconde a tabela de novos produtos
+    // Esconde a área de cadastro
     document.getElementById("gerenciadorProd").classList.add("hidden")
     
     // Arrays para guardar os itens da tabela de preço
@@ -72,64 +78,67 @@
     let precos = ["R$20", "R$30", "R$12.000"]
     let quantidades = [500, 200, 50]
     
-    // Váriavel da tabela
+    // Váriavel para controlar a tabela pelo script
     let corpo = document.getElementById("corpoTab")
 
-    // For para manusear a tabela vazia com o array
-    for (let i = 0; i < nomes.length; i++) {
-        let linha = document.createElement("tr")
-        linha.innerHTML =`
-        <td>${nomes[i]}</td>
-        <td>${precos[i]}</td>
-        <td>${quantidades[i]}</td>
-        `
-        corpo.appendChild(linha) // Adicionar a variável linha a tabela(tbody)
-    }
+    // Chama a função para exibir os dados iniciais ao carregar a página
+    atualizarTabela() 
     
-    // Digitar os novos dados
-    function cadastrar() {
-        document.getElementById("tabelaProd").classList.add("hidden")
-        document.getElementById("gerenciadorProd").classList.remove("hidden")
-        document.getElementById("cadastrarProd").classList.add("hidden")
+    // Ir para a área de cadastro adicionar novos produtos
+    function cadastrar() { // Botão
+        document.getElementById("tabelaProd").classList.add("hidden") // Esconde a tabela
+        document.getElementById("gerenciadorProd").classList.remove("hidden") // Mostra a tela de add novos produtos
+        document.getElementById("cadastrarProd").classList.add("hidden") // Esconde o botão de cadastro
     }
 
-    // Coleta os valores do formulário
-    function salvar() {
+    // Coleta os valores do formulário e add em uma nova variável
+    function salvar() { // Botão
         let novoNome = document.getElementById("nomeProd").value
         let novoPreco = document.getElementById("precoProd").value
         let novaQuantidade = document.getElementById("quantidadeProd").value
         
         // Adiciona os novos valores aos arrays
-        if (novoNome || novoPreco || novaQuantidade) {
-            nomes.push(novoNome)
-            precos.push(novoPreco)
-            quantidades.push(novaQuantidade) 
-        }
+        if (novoNome && novoPreco && novaQuantidade) { // Usando AND para os 3 serem obrigatórios
+            nomes.push(novoNome) // Adciona ao array de nomes
+            precos.push(novoPreco) // Adciona ao array de preços
+            quantidades.push(novaQuantidade) // Adciona ao array de quantidades (estoque)
 
-        // Chama a função para redesenhar a tabela
-        atualizarTabela()
+            // Limpar os dados do formulário
+            document.getElementById("nomeProd").value = ""
+            document.getElementById("precoProd").value = ""
+            document.getElementById("quantidadeProd").value = ""
+
+            // Chama a função para mostrar a tabela com os novos produtos
+            atualizarTabela()
+            
+            // Chama a função para voltar, se as condições forem feitas
+            cancelar() 
+        } else {
+            alert("Por favor, preencha todos os campos.") // Alerta se tentarem salvar sem preencher tudo
+        }
     }
     
     function atualizarTabela() {
         // Limpa o conteúdo atual da tabela para evitar duplicatas
         corpo.innerHTML = ""
         
-        // Recria as linhas com todos os dados atualizados (incluindo o novo)
+        // Mostra a tabela atualizada com os novos itens do array
         for (let i = 0; i < nomes.length; i++) {
-            let linha = document.createElement("tr")
+            let linha = document.createElement("tr") // Viriável para acessar a tabela e add elemntos nela
             linha.innerHTML =`
             <td>${nomes[i]}</td>
             <td>${precos[i]}</td>
             <td>${quantidades[i]}</td>
-            `
-            corpo.appendChild(linha)
+            ` // Acessando a variável linha(tr) para add/mostrar os novos itens do array
+            corpo.appendChild(linha) // Add linha ao corpo(tbody)
         }
     }
-    
-    function cancelar() {
-        document.getElementById("tabelaProd").classList.remove("hidden")
-        document.getElementById("gerenciadorProd").classList.add("hidden")
-        document.getElementById("cadastrarProd").classList.remove("hidden")
+
+    // Volta a tela inicial
+    function cancelar() { // Botão
+        document.getElementById("tabelaProd").classList.remove("hidden") // Mostra a tabela de produtos
+        document.getElementById("gerenciadorProd").classList.add("hidden") // Esconde o gerenciador de add produtos
+        document.getElementById("cadastrarProd").classList.remove("hidden") // Mostra o botão de cadastro novamente
     }
     </script>
 </body>
