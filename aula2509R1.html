@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro de Produto</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="tabelaProd">
+        <table border="1">
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+            </tr>
+            <tbody id="corpoTab"></tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div >
+        <button id="cadastrarProd" onclick="cadastrar()">Cadastrar</button>
+    </div>
+
+    <div id="gerenciadorProd">
+        <h1>Cadastro de produto</h2>
+
+        <form action="">
+            <div>
+                <label for ="nomeProdt">Nome: 
+                    <input id="nomeProd" placeholder="Digite o nome" required>
+                </label>
+            </div>
+
+            <br>
+
+            <div>
+                <label for="precoProdt">Preço: 
+                    <input id="precoProd" placeholder="Digite o preço" required>
+                </label>
+            </div>
+
+            <br>
+
+            <div>
+                <label for="quantidadeProdt">Quantidade: 
+                    <input  id="quantidadeProd" placeholder="Digite a quantidade" required>
+                </label>
+            </div>
+
+            <br>
+
+            <div>
+                <button onclick="salvar()">Salvar</button>
+                <button onclick="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+    // Esconde a tabela de novos produtos
+    document.getElementById("gerenciadorProd").classList.add("hidden")
+    
+    // Arrays para guardar os itens da tabela de preço
+    let nomes = ["Capinha", "Película", "Celular"]
+    let precos = ["R$20", "R$30", "R$12.000"]
+    let quantidades = [500, 200, 50]
+    
+    // Váriavel da tabela
+    let corpo = document.getElementById("corpoTab")
+
+    // For para manusear a tabela vazia com o array
+    for (let i = 0; i < nomes.length; i++) {
+        let linha = document.createElement("tr")
+        linha.innerHTML =`
+        <td>${nomes[i]}</td>
+        <td>${precos[i]}</td>
+        <td>${quantidades[i]}</td>
+        `
+        corpo.appendChild(linha) // Adicionar a variável linha a tabela(tbody)
+    }
+    
+    // Digitar os novos dados
+    function cadastrar() {
+        document.getElementById("tabelaProd").classList.add("hidden")
+        document.getElementById("gerenciadorProd").classList.remove("hidden")
+        document.getElementById("cadastrarProd").classList.add("hidden")
+    }
+
+    // Coleta os valores do formulário
+    function salvar() {
+        let novoNome = document.getElementById("nomeProd").value
+        let novoPreco = document.getElementById("precoProd").value
+        let novaQuantidade = document.getElementById("quantidadeProd").value
+        
+        // Adiciona os novos valores aos arrays
+        if (novoNome || novoPreco || novaQuantidade) {
+            nomes.push(novoNome)
+            precos.push(novoPreco)
+            quantidades.push(novaQuantidade) 
+        }
+
+        // Chama a função para redesenhar a tabela
+        atualizarTabela()
+    }
+    
+    function atualizarTabela() {
+        // Limpa o conteúdo atual da tabela para evitar duplicatas
+        corpo.innerHTML = ""
+        
+        // Recria as linhas com todos os dados atualizados (incluindo o novo)
+        for (let i = 0; i < nomes.length; i++) {
+            let linha = document.createElement("tr")
+            linha.innerHTML =`
+            <td>${nomes[i]}</td>
+            <td>${precos[i]}</td>
+            <td>${quantidades[i]}</td>
+            `
+            corpo.appendChild(linha)
+        }
+    }
+    
+    function cancelar() {
+        document.getElementById("tabelaProd").classList.remove("hidden")
+        document.getElementById("gerenciadorProd").classList.add("hidden")
+        document.getElementById("cadastrarProd").classList.remove("hidden")
+    }
+    </script>
+</body>
+</html>
